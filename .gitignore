@@ -1,0 +1,5 @@
+src/version.h
+out/
+*xcshareddata*
+*xcuserdata*
+*xcworkspacedata*

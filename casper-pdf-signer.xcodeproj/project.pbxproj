@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		471E8464251B6E1B005B4B14 /* libqpdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 471E845E251B6E04005B4B14 /* libqpdf.a */; };
 		471E84AE251BB0F2005B4B14 /* annotation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 471E84AC251BB0F2005B4B14 /* annotation.cc */; };
 		471E84B5251BB302005B4B14 /* writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 471E84B3251BB302005B4B14 /* writer.cc */; };
 		472C18B4251A0F2200811559 /* signer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 472C18B2251A0F2200811559 /* signer.cc */; };
@@ -42,20 +41,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		471E845D251B6E04005B4B14 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 471E8456251B6E04005B4B14 /* qpdf.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 47BD72A2250141DE00095554;
-			remoteInfo = qpdf;
-		};
-		471E8462251B6E11005B4B14 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 471E8456251B6E04005B4B14 /* qpdf.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 47BD72A1250141DE00095554;
-			remoteInfo = qpdf;
-		};
 		472C18DB251A15BA00811559 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 472C18D5251A15BA00811559 /* casper-connectors.xcodeproj */;
@@ -107,7 +92,6 @@
 
 /* Begin PBXFileReference section */
 		470AC1FE25277AE100F4F665 /* types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
-		471E8456251B6E04005B4B14 /* qpdf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = qpdf.xcodeproj; path = qpdf/qpdf.xcodeproj; sourceTree = "<group>"; };
 		471E8466251B6E41005B4B14 /* common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = common.xcconfig; sourceTree = "<group>"; };
 		471E8467251B6E41005B4B14 /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = debug.xcconfig; sourceTree = "<group>"; };
 		471E8468251B6E41005B4B14 /* release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = release.xcconfig; sourceTree = "<group>"; };
@@ -155,7 +139,6 @@
 			files = (
 				47B4F1DB251CA1C1001ED028 /* Foundation.framework in Frameworks */,
 				472C19CF251A166100811559 /* libcasper-cc.a in Frameworks */,
-				471E8464251B6E1B005B4B14 /* libqpdf.a in Frameworks */,
 				47B4F1DF251CA1D6001ED028 /* libiconv.tbd in Frameworks */,
 				47B4F209251CA250001ED028 /* libbz2.tbd in Frameworks */,
 			);
@@ -171,14 +154,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		471E8457251B6E04005B4B14 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				471E845E251B6E04005B4B14 /* libqpdf.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		471E8465251B6E41005B4B14 /* xcode */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,7 +259,6 @@
 		472C18D4251A158800811559 /* third-party */ = {
 			isa = PBXGroup;
 			children = (
-				471E8456251B6E04005B4B14 /* qpdf.xcodeproj */,
 			);
 			name = "third-party";
 			path = "../casper-packager";
@@ -355,7 +329,6 @@
 			);
 			dependencies = (
 				472C19C7251A165700811559 /* PBXTargetDependency */,
-				471E8463251B6E11005B4B14 /* PBXTargetDependency */,
 			);
 			name = "casper-pdf-signer";
 			productName = "casper-pdf-signer";
@@ -411,10 +384,6 @@
 					ProductGroup = 472C18D6251A15BA00811559 /* Products */;
 					ProjectRef = 472C18D5251A15BA00811559 /* casper-connectors.xcodeproj */;
 				},
-				{
-					ProductGroup = 471E8457251B6E04005B4B14 /* Products */;
-					ProjectRef = 471E8456251B6E04005B4B14 /* qpdf.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -425,13 +394,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		471E845E251B6E04005B4B14 /* libqpdf.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libqpdf.a;
-			remoteRef = 471E845D251B6E04005B4B14 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		472C18DC251A15BA00811559 /* libcasper-connectors.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -503,11 +465,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		471E8463251B6E11005B4B14 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = qpdf;
-			targetProxy = 471E8462251B6E11005B4B14 /* PBXContainerItemProxy */;
-		};
 		472C19C7251A165700811559 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "casper-cc";
@@ -669,6 +626,7 @@
 					"$(SRCROOT)/../casper-packager/libexpat/darwin/pkg/$(CONFIGURATION)/libexpat/usr/local/casper/libexpat/lib/libexpat.a",
 					"$(SRCROOT)/../casper-packager/gettext/darwin/pkg/$(CONFIGURATION)/gettext/usr/local/casper/gettext/lib/libgnuintl.a",
 					"$(SRCROOT)/../casper-packager/libtiff/darwin/pkg/$(CONFIGURATION)/libtiff/usr/local/casper/libtiff/lib/libtiff.a",
+					"$(SRCROOT)/../casper-packager/qpdf/darwin/pkg/$(CONFIGURATION)/qpdf/usr/local/casper/qpdf/lib/libqpdf.a",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
@@ -695,6 +653,7 @@
 					"$(SRCROOT)/../casper-packager/libexpat/darwin/pkg/$(CONFIGURATION)/libexpat/usr/local/casper/libexpat/lib/libexpat.a",
 					"$(SRCROOT)/../casper-packager/gettext/darwin/pkg/$(CONFIGURATION)/gettext/usr/local/casper/gettext/lib/libgnuintl.a",
 					"$(SRCROOT)/../casper-packager/libtiff/darwin/pkg/$(CONFIGURATION)/libtiff/usr/local/casper/libtiff/lib/libtiff.a",
+					"$(SRCROOT)/../casper-packager/qpdf/darwin/pkg/$(CONFIGURATION)/qpdf/usr/local/casper/qpdf/lib/libqpdf.a",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";

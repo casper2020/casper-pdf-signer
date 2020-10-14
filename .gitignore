@@ -1,4 +1,5 @@
 src/version.h
+*.o
 out/
 *xcshareddata*
 *xcuserdata*

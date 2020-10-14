@@ -26,6 +26,7 @@
 
 #include <string>
 #include <vector>
+#include <functional> // std::function
 
 #include <openssl/pkcs7.h>
 #include <openssl/x509.h>

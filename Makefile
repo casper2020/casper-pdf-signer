@@ -20,22 +20,15 @@ EXECUTABLE_SUFFIX   ?=
 EXECUTABLE_NAME     ?= casper-pdf-signer$(EXECUTABLE_SUFFIX)
 EXECUTABLE_MAIN_SRC := src/main.cc
 LIBRARY_NAME        :=
-VERSION             ?= $(shell cat $(PACKAGER_DIR)/$(EXECUTABLE_NAME)/version)
+VERSION             := $(shell cat $(PACKAGER_DIR)/casper-pdf-signer/version)
 CHILD_CWD           := $(THIS_DIR)
 CHILD_MAKEFILE      := $(MAKEFILE_LIST)
-
-EV_DEP_ON           := true
-CURL_DEP_ON         := true
 
 ###################
 # THIS TOOL SOURCE
 ###################
 
-CASPER_PDF_SIGNER_CC_SRC := \
-
-##########
 # SOURCE
-##########
 
 BISON_SRC :=
 RAGEL_SRC :=

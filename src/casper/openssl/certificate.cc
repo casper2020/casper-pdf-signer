@@ -29,6 +29,8 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 
+#include <string.h> // strerror
+
 #define CASPER_OPENSSL_CERTIFICATE_THROW_OPENSSL_ERROR(a_format, ...) \
 { \
     char __tmp_error__[130] = {0}; \

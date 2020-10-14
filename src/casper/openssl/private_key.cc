@@ -21,6 +21,8 @@
 
 #include "casper/openssl/private_key.h"
 
+#include <string.h> // strlen
+
 /**
  * @brief Defaiult 
  */

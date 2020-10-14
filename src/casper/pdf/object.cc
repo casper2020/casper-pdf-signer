@@ -23,6 +23,8 @@
 
 #include "cc/exception.h"
 
+#include <string.h> // strcmp
+
 /**
  * @brief Default constructor.
  *

@@ -45,8 +45,10 @@ casper::pdf::Annotation::Annotation (const std::string& a_name)
 casper::pdf::Annotation::Annotation (const casper::pdf::Annotation& a_annotation)
 : casper::pdf::Object(a_annotation)
 {
-    rect_ = a_annotation.rect_;
-    page_ = a_annotation.page_;
+    rect_   = a_annotation.rect_;
+    page_   = a_annotation.page_;
+    fonts_  = a_annotation.fonts_;
+    images_ = a_annotation.images_;
 }
 
 /**

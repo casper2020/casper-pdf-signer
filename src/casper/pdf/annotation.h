@@ -46,11 +46,31 @@ namespace casper
                 size_t w_;
                 size_t h_;
             } Rect;
+            
+            typedef struct {
+                std::string id_;  //!< Font ID.
+                std::string uri_; //!< Local URI to default font.
+            } Font;
+            
+            typedef struct {
+                Font default_; //!< Local URI to default font.
+            } Fonts;
+
+            typedef struct {
+                std::string id_;
+                std::string uri_; //!< Local URI to logo file.
+            } Image;
+
+            typedef struct {
+                Image logo_; //!< Local URI to logo file.
+            } Images;
                         
         private: // Data
             
             Rect   rect_;
             size_t page_;
+            Fonts  fonts_;
+            Images images_;
 
         public: // Constructor(s) / Destructor
             
@@ -63,9 +83,13 @@ namespace casper
         public: // Method(s) / Function(s)
             
             void Set (const Rect& a_rect, const size_t a_page);
+            void Set (const Fonts& a_fonts, const Images& a_images);
 
             const Rect&   rect () const;
             const size_t& page () const;
+            
+            const Fonts&  fonts  () const;
+            const Images& images () const;
         
         }; // end of class 'Annotation'
 
@@ -74,15 +98,31 @@ namespace casper
             rect_ = a_rect;
             page_ = a_page;
         }
+    
+        inline void Annotation::Set (const Fonts& a_fonts, const Images& a_images)
+        {
+            fonts_  = a_fonts;
+            images_ = a_images;
+        }
 
         inline const Annotation::Rect& Annotation::rect () const
         {
             return rect_;
         }
-
+    
         inline const size_t& Annotation::page () const
         {
             return page_;
+        }
+       
+        inline const Annotation::Fonts& Annotation::fonts () const
+        {
+            return fonts_;
+        }
+
+        inline const Annotation::Images& Annotation::images () const
+        {
+            return images_;
         }
 
         // MARK: -

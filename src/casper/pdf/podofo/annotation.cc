@@ -25,6 +25,9 @@
 
 // MARK: - SignatureAnnotation
 
+const double casper::pdf::podofo::SignatureAnnotation::s_height_  = 39.12; // ToPoints(13.8, "mm");
+const double casper::pdf::podofo::SignatureAnnotation::s_padding_ =  4.25; // ToPoints(1.5 , "mm");
+
 /**
  * @brief Partial copy constructor.
  *
@@ -70,7 +73,7 @@ void casper::pdf::podofo::SignatureAnnotation::Draw (const ::PoDoFo::PdfAnnotati
                                                         /* bBold              */ false,
                                                         /* bItalic            */ false,
                                                         /* bSymbolCharset     */ false,
-                                                        /* pEncoding          */ PoDoFo::PdfEncodingFactory::GlobalWinAnsiEncodingInstance(),
+                                                        /* pEncoding          */ PoDoFo::PdfEncodingFactory::GlobalMacRomanEncodingInstance(),
                                                         /* eFontCreationFlags */ PoDoFo::PdfFontCache::eFontCreationFlags_AutoSelectBase14,
                                                         /* bEmbedd            */ true,
                                                         /* pszFileName        */ fonts().default_.uri_.c_str()
@@ -102,22 +105,26 @@ void casper::pdf::podofo::SignatureAnnotation::Draw (const ::PoDoFo::PdfAnnotati
         ::PoDoFo::PdfImage image = ::PoDoFo::PdfImage(&a_document);
                 
         image.LoadFromFile(images().logo_.uri_.c_str());
+                
+        const double sx = ( s_height_ / image.GetWidth()  );
+        const double sy = ( s_height_ / image.GetHeight() );    
         
-        const double sx = ( 59.0 / image.GetWidth()  );
-        const double sy = ( 59.0 / image.GetHeight() );
-
-        painter.DrawImage(4.0, 4.0, &image, sx, sy);
+        const double tx = ( sx * image.GetWidth() ) + ( 2 * s_padding_ );
+        const double th = s_height_ / 5.0;
+        painter.DrawImage(s_padding_, s_padding_, &image, sx, sy);
 
         //
         // Draw Text:
         //
         painter.SetColor(0.58, 0.58, 0.58); // #969696
-        font->SetFontSize(6);
+        font->SetFontSize(7);
         painter.SetFont(font);
-        
-        // x =
-        painter.DrawText(72.0, ToPoints(2, "mm"), ::PoDoFo::PdfString("Assinado por: <TODO>"));
-        painter.DrawText(72.0, ToPoints(10, "mm"), ::PoDoFo::PdfString("Data:  <TODO>"));
+
+        painter.DrawText(tx        , ( 3 * s_padding_ ) + ( 3 * th ), ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().reason_.c_str())));
+        painter.DrawText(tx        , ( 2 * s_padding_ ) + ( 2 * th ), ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().author_.c_str())));
+        painter.DrawText(tx        , (     s_padding_ ) + ( 1 * th ), ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().certified_by_.c_str())));
+        painter.DrawText(tx        , s_padding_                     , ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().date_time_.c_str())));
+        painter.DrawText(tx + 120.0, s_padding_                     , ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().oid_.c_str())));
         
         a_field.SetAppearanceStream(&sigXObject);
 

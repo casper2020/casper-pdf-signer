@@ -89,6 +89,8 @@ namespace casper
                 
             public: // Placeholder - Method(s) / Function(s)
                 
+                void GetSigningTime (std::string& o_time);
+                
                 void SetPlaceholder (const std::string& a_in, pdf::SignatureAnnotation& a_annotation,
                                      std::string& o_out);
 

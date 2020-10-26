@@ -280,6 +280,21 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
 // MARK: - [PUBLIC] - SIGNER INFO - Signed Attributes
 
 /**
+ * @brief Get current time as the signing time.
+ *
+ * @param o_value Signing time YYMMDDHHMMSSZ - X509.
+ */
+void casper::openssl::P7::GetSigningTime (std::string& o_value)
+{
+    ASN1_UTCTIME* st = X509_gmtime_adj(NULL, 0);
+    if ( nullptr == st ) {
+        CASPER_OPENSSL_P7_THROW_OPENSSL_EXCEPTION(sk_p7_err_msg_unable_to_create_new_object_, "ASN1_UTCTIME", "nullptr");
+    }
+    o_value = std::string(reinterpret_cast<const char* const>(st->data), st->length);
+    ASN1_UTCTIME_free(st);
+}
+
+/**
  * @brief Calculate attributes on \link PKCS7_SIGNER_INFO \link that will be signed.
  *
  * @param a_digest      Previously calculate digest.
@@ -340,13 +355,18 @@ void casper::openssl::P7::CalculateSigningAttributes (const std::string& a_diges
         }
         
         // ... add signing time ...
-        st = X509_gmtime_adj(NULL, 0);
+        if ( 0 != o_signing_time.length() ) {
+            st = ASN1_UTCTIME_new();
+            ASN1_UTCTIME_set_string(st, o_signing_time.c_str());
+        } else {
+            st = X509_gmtime_adj(NULL, 0);
+        }
         if ( 1 != PKCS7_add0_attrib_signing_time(si, st) ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR(sk_p7_err_msg_unable_to_add_attribute_, "signing time");
         }
         o_signing_time = std::string(reinterpret_cast<const char* const>(st->data), st->length);
         st = nullptr; // ... it will be relased once si is released ...
-        
+
         // ... decode and add document hash bytes ...
         DecodeBase64(a_digest, &dh, SHA256_DIGEST_LENGTH);
         if ( 1 != PKCS7_add1_attrib_digest(si, (const unsigned char*) dh, SHA256_DIGEST_LENGTH) ) {

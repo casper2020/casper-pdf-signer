@@ -39,8 +39,11 @@ namespace casper
         } ByteRange;
 
         typedef struct {
+            std::string oid_;
             std::string author_;
             std::string reason_;
+            std::string certified_by_;
+            std::string date_time_;
         } SignatureInfo;
 
         typedef struct {

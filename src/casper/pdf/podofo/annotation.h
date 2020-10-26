@@ -42,6 +42,11 @@ namespace casper
             class SignatureAnnotation final : public ::casper::pdf::SignatureAnnotation
             {
                 
+            private: // Static Const Data
+                
+                static const double s_height_;
+                static const double s_padding_;
+                
             public: // Constructor(s) / Destructor
                 
                 SignatureAnnotation () = delete;

@@ -82,6 +82,16 @@ casper::pdf::Signer::~Signer ()
     delete [] buffer_;
 }
 
+/**
+ * @brief Get current time as the signing time.
+ *
+ * @param o_out Signing time YYMMDDHHMMSSZ - X509.
+ */
+void casper::pdf::Signer::GetSigningTime (std::string& o_out)
+{
+    casper::openssl::P7::GetSigningTime(o_out);
+}
+
 // MARK: - [PUBLIC] - Placeholder
 
 /**

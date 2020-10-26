@@ -69,6 +69,7 @@ namespace casper
             
         public: // Static Method(s) / Function(s)
             
+            static void GetSigningTime             (std::string& o_value);
             static void CalculateSigningAttributes (const std::string& a_digest, const Certificate* a_certificate,
                                                     std::string& o_signing_time, std::string& o_auth_attr);
             

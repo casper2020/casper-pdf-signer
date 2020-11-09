@@ -105,26 +105,39 @@ void casper::pdf::podofo::SignatureAnnotation::Draw (const ::PoDoFo::PdfAnnotati
         ::PoDoFo::PdfImage image = ::PoDoFo::PdfImage(&a_document);
                 
         image.LoadFromFile(images().logo_.uri_.c_str());
-                
-        const double sx = ( s_height_ / image.GetWidth()  );
-        const double sy = ( s_height_ / image.GetHeight() );    
-        
+            
+        double sx, sy;
+        if ( a_rect.GetWidth() == a_rect.GetHeight() ) {
+            sx = ( a_rect.GetWidth() / image.GetWidth()  );
+            sy = ( a_rect.GetHeight() / image.GetHeight() );
+            painter.DrawImage(0.0, 0.0, &image, sx, sy);
+        } else {
+            sx = ( s_height_ / image.GetWidth()  );
+            sy = ( s_height_ / image.GetHeight() );
+            painter.DrawImage(s_padding_, s_padding_, &image, sx, sy);
+        }
+
         const double tx = ( sx * image.GetWidth() ) + ( 2 * s_padding_ );
         const double th = s_height_ / 5.0;
-        painter.DrawImage(s_padding_, s_padding_, &image, sx, sy);
 
         //
         // Draw Text:
         //
         painter.SetColor(0.58, 0.58, 0.58); // #969696
-        font->SetFontSize(7);
         painter.SetFont(font);
-
-        painter.DrawText(tx        , ( 3 * s_padding_ ) + ( 3 * th ), ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().reason_.c_str())));
-        painter.DrawText(tx        , ( 2 * s_padding_ ) + ( 2 * th ), ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().author_.c_str())));
-        painter.DrawText(tx        , (     s_padding_ ) + ( 1 * th ), ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().certified_by_.c_str())));
-        painter.DrawText(tx        , s_padding_                     , ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().date_time_.c_str())));
-        painter.DrawText(tx + 120.0, s_padding_                     , ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().oid_.c_str())));
+        
+        if ( a_rect.GetWidth() == a_rect.GetHeight() ) {
+            font->SetFontSize(5);
+            painter.DrawMultiLineText(0.0, 0.0, a_rect.GetWidth(), a_rect.GetHeight(), ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().reason_.c_str())),
+                                      ::PoDoFo::ePdfAlignment_Center, ::PoDoFo::ePdfVerticalAlignment_Center);
+        } else {
+            font->SetFontSize(7);
+            painter.DrawText(tx        , ( 3 * s_padding_ ) + ( 3 * th ), ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().reason_.c_str())));
+            painter.DrawText(tx        , ( 2 * s_padding_ ) + ( 2 * th ), ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().author_.c_str())));
+            painter.DrawText(tx        , (     s_padding_ ) + ( 1 * th ), ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().certified_by_.c_str())));
+            painter.DrawText(tx        , s_padding_                     , ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().date_time_.c_str())));
+            painter.DrawText(tx + 120.0, s_padding_                     , ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().oid_.c_str())));
+        }
         
         a_field.SetAppearanceStream(&sigXObject);
 

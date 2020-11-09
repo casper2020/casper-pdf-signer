@@ -196,13 +196,17 @@ void casper::pdf::podofo::Writer::Append (const pdf::SignatureAnnotation& a_anno
         }
         signature_field = new ::PoDoFo::PdfSignatureField(annotation, acro_form, &document);
         casper::pdf::podofo::SignatureAnnotation sign_annotation(a_annotation);
-        sign_annotation.Draw(*annotation, rect, document, *signature_field);
+        // ... prevent some apps from displaying annotation even it if it's not visible ...
+        if ( true == a_annotation.visible() ) {
+            sign_annotation.Draw(*annotation, rect, document, *signature_field);
+        }
         
         signature_field->SetReadOnly(true);
         
-        const ::PoDoFo::pdf_int32 min_signature_size = 20480; // TODO: estimate PCKS7 max size
-        
-        sign_handler_->SetSignatureSize(min_signature_size);
+        sign_handler_->SetSignatureSize(a_annotation.info().size_in_bytes_);
+        if ( 0 == a_annotation.info().size_in_bytes_ ) {
+            throw ::cc::Exception("Invalid signature size of " SIZET_FMT " !", a_annotation.info().size_in_bytes_);
+        }
         
         signature_field->SetFieldName(name);
         signature_field->SetSignatureReason(::PoDoFo::PdfString(a_annotation.info().reason_));

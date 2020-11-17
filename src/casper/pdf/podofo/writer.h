@@ -24,8 +24,7 @@
 #include <string>
 
 #include "casper/pdf/writer.h"
-
-#include <podofo/podofo.h>
+#include "casper/pdf/podofo/includes.h"
 
 namespace casper
 {

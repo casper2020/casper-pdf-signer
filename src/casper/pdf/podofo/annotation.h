@@ -27,8 +27,7 @@
 #include <string>
 
 #include "casper/pdf/annotation.h"
-
-#include <podofo/podofo.h>
+#include "casper/pdf/podofo/includes.h"
 
 namespace casper
 {

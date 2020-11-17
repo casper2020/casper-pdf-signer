@@ -115,6 +115,7 @@
 		472C19F7251A192800811559 /* certificate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = certificate.cc; sourceTree = "<group>"; };
 		472C1A02251A1B2600811559 /* private_key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = private_key.h; sourceTree = "<group>"; };
 		472C1A05251A1BA100811559 /* private_key.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = private_key.cc; sourceTree = "<group>"; };
+		475F1C552562ED5D009BD0FF /* includes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = includes.h; sourceTree = "<group>"; };
 		4785D98A252E28F700D1F8D2 /* object.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = object.cc; sourceTree = "<group>"; };
 		4785D98B252E28F700D1F8D2 /* object.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
 		47B4F1BA251C8ECC001ED028 /* annotation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = annotation.cc; sourceTree = "<group>"; };
@@ -176,6 +177,7 @@
 		471E84AB251BB0C6005B4B14 /* podofo */ = {
 			isa = PBXGroup;
 			children = (
+				475F1C552562ED5D009BD0FF /* includes.h */,
 				47B4F1BB251C8ECC001ED028 /* annotation.h */,
 				47B4F1BA251C8ECC001ED028 /* annotation.cc */,
 				471E84B4251BB302005B4B14 /* writer.h */,
@@ -477,6 +479,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -547,6 +550,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

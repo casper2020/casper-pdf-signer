@@ -74,7 +74,7 @@ void casper::pdf::podofo::SignatureAnnotation::Draw (const ::PoDoFo::PdfAnnotati
                                                         /* bItalic            */ false,
                                                         /* bSymbolCharset     */ false,
                                                         /* pEncoding          */ PoDoFo::PdfEncodingFactory::GlobalMacRomanEncodingInstance(),
-                                                        /* eFontCreationFlags */ PoDoFo::PdfFontCache::eFontCreationFlags_AutoSelectBase14,
+                                                        /* eFontCreationFlags */ PoDoFo::PdfFontCache::eFontCreationFlags_Type1Subsetting,
                                                         /* bEmbedd            */ true,
                                                         /* pszFileName        */ fonts().default_.uri_.c_str()
         ); // NOTES: owned and release by 'a_document'

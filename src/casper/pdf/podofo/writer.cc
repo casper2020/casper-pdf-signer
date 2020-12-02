@@ -215,6 +215,7 @@ void casper::pdf::podofo::Writer::Append (const pdf::SignatureAnnotation& a_anno
         signature_field->SetSignatureCreator(::PoDoFo::PdfName(name_));
 
         // ... write new objects ...
+        document.SetWriteMode(::PoDoFo::EPdfWriteMode::ePdfWriteMode_Compact);
         document.WriteUpdate(sign_handler_, /* bTruncate */ false);
         
         // ... ensure signature is in place ...

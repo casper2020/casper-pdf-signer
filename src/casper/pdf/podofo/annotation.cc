@@ -69,16 +69,14 @@ void casper::pdf::podofo::SignatureAnnotation::Draw (const ::PoDoFo::PdfAnnotati
 
         painter.SetPage(&sigXObject);
 
-        ::PoDoFo::PdfFont* font = a_document.CreateFont(fonts().default_.id_.c_str(),
-                                                        /* bBold              */ false,
-                                                        /* bItalic            */ false,
-                                                        /* bSymbolCharset     */ false,
-                                                        /* pEncoding          */ PoDoFo::PdfEncodingFactory::GlobalMacRomanEncodingInstance(),
-                                                        /* eFontCreationFlags */ PoDoFo::PdfFontCache::eFontCreationFlags_Type1Subsetting,
-                                                        /* bEmbedd            */ true,
-                                                        /* pszFileName        */ fonts().default_.uri_.c_str()
-        ); // NOTES: owned and release by 'a_document'
-                
+        ::PoDoFo::PdfFont* font = a_document.PdfDocument::CreateFontSubset(fonts().default_.id_.c_str(),
+                                                                           /* bBold              */ false,
+                                                                           /* bItalic            */ false,
+                                                                           /* bSymbolCharset     */ false,
+                                                                           /* pEncoding          */ PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance(),
+                                                                           /* pszFileName        */ fonts().default_.uri_.c_str()
+        );  // NOTES: owned and release by 'a_document'
+        
         /*
          * FROM PoDoFo example:
          * Workaround Adobe's reader error 'Expected a dict object.' when the stream
@@ -138,6 +136,8 @@ void casper::pdf::podofo::SignatureAnnotation::Draw (const ::PoDoFo::PdfAnnotati
             painter.DrawText(tx        , s_padding_                     , ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().date_time_.c_str())));
             painter.DrawText(tx + 120.0, s_padding_                     , ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().oid_.c_str())));
         }
+        // ... THIS MUST BE CALLED, since it's
+        font->EmbedSubsetFont();
         
         a_field.SetAppearanceStream(&sigXObject);
 

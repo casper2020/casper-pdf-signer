@@ -79,6 +79,10 @@ namespace casper
             public: // Method(s) / Function(s)
             
                 void GetByteRange (const std::string& a_in, pdf::SignatureAnnotation& a_annotation);
+                
+            public: // Static Method(s) / Function(s)
+                
+                static void Setup ();
 
             }; // end of class 'Annotation'
         

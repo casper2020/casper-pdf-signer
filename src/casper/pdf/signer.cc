@@ -650,3 +650,13 @@ void casper::pdf::Signer::CalculateDigest (const std::string& a_uri, const Signe
     
     o_digest = sha256.Finalize(::cc::hash::SHA256::OutputFormat::BASE64_RFC4648);
 }
+
+// MARK: - STATIC OneShot Call Method(s) / Function(s)
+
+/**
+ * @brief Enable or Disable logging and debug.
+ */
+void casper::pdf::Signer::Setup ()
+{
+    casper::pdf::podofo::Writer::Setup();
+}

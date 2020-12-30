@@ -26,6 +26,8 @@
 #include "cc/types.h" // SIZET_FMT
 #include "cc/fs/file.h"
 
+#include "cc/debug/types.h" //  CC_DEBUG_ON
+
 #include "casper/pdf/podofo/annotation.h"
 
 // MARK: -
@@ -473,4 +475,19 @@ const ::PoDoFo::PdfArray& casper::pdf::podofo::Writer::GetByteRangeArray (const 
 
     }
     return byte_range_object->GetArray();
+}
+
+// MARK: - STATIC OneShot Call Method(s) / Function(s)
+
+/**
+ * @brief Enable or Disable logging and debug.
+ */
+void casper::pdf::podofo::Writer::Setup ()
+{
+#ifdef CC_DEBUG_ON
+    ::PoDoFo::PdfError::EnableLogging(true);
+#else
+    ::PoDoFo::PdfError::EnableLogging(false);
+#endif
+    ::PoDoFo::PdfError::EnableDebug(false);
 }

@@ -140,6 +140,10 @@ namespace casper
                 void ZeroOut (FILE* a_fp, const size_t& a_size);
                 
                 void CalculateDigest (const std::string& a_uri, const Signer::ByteRange& a_byte_range, std::string& o_digest);
+                
+            public: // Static Method(s) / Function(s)
+                
+                static void Setup ();
 
             }; // end of class 'Signer'
     

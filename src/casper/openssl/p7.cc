@@ -248,12 +248,12 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
         EVP_PKEY_free(key);
     }
 
-    if ( nullptr == dh ) {
+    if ( nullptr != dh ) {
         delete [] dh;
         dh = nullptr;
     }
     
-    if ( nullptr == sh ) {
+    if ( nullptr != sh ) {
         delete [] sh;
         sh = nullptr;
     }
@@ -479,11 +479,14 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
         }
         
         ASN1_INTEGER_free(si->issuer_and_serial->serial);
-        si->issuer_and_serial->serial = ASN1_INTEGER_dup(X509_get_serialNumber(x509));
+        if ( ! ( si->issuer_and_serial->serial = ASN1_INTEGER_dup(X509_get_serialNumber(x509)) ) ) {
+            CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR(sk_p7_err_msg_unable_to_set_si_field_, "serial");
+        }
             
         if ( 1 != X509_ALGOR_set0(si->digest_alg, OBJ_nid2obj(EVP_MD_type(EVP_sha256())), V_ASN1_NULL, NULL) ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR(sk_p7_err_msg_unable_to_set_si_field_, "digest alg");
         }
+        
         if ( 1 != PKCS7_add_signer(p7, si) ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR("%s", sk_p7_err_msg_unable_to_add_signer_);
         }
@@ -532,6 +535,7 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
         
         // ... decode and add signed digest bytes ...
         DecodeBase64(a_enc_digest, &sh, (SHA256_DIGEST_LENGTH * 8));
+        ASN1_STRING_free(si->enc_digest);
         si->enc_digest = ASN1_OCTET_STRING_new();
         if ( nullptr == si->enc_digest ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_EXCEPTION(sk_p7_err_msg_unable_to_create_new_object_, "ASN1_OCTET_STRING", "nullptr");
@@ -572,11 +576,12 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
     Certificate::Unload(&x509);
     Certificate::Unload(x509_chain);
     
-    if ( nullptr == dh ) {
+    if ( nullptr != dh ) {
         delete [] dh;
         dh = nullptr;
     }
-    if ( nullptr == sh ) {
+
+    if ( nullptr != sh ) {
         delete [] sh;
         sh = nullptr;
     }

@@ -136,7 +136,7 @@ void casper::pdf::podofo::SignatureAnnotation::Draw (const ::PoDoFo::PdfAnnotati
             painter.DrawText(tx        , s_padding_                     , ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().date_time_.c_str())));
             painter.DrawText(tx + 120.0, s_padding_                     , ::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(info().oid_.c_str())));
         }
-        // ... THIS MUST BE CALLED, since it's
+
         font->EmbedSubsetFont();
         
         a_field.SetAppearanceStream(&sigXObject);

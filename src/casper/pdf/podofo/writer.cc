@@ -134,6 +134,8 @@ void casper::pdf::podofo::Writer::Append (const pdf::SignatureAnnotation& a_anno
         throw ::cc::Exception("Document has no pages!");
     }
     
+    ::PoDoFo::PdfSignatureField* signature_field = nullptr;
+    
     try {
         
         // ... grab local ref to document ...
@@ -168,8 +170,7 @@ void casper::pdf::podofo::Writer::Append (const pdf::SignatureAnnotation& a_anno
             acro_form->SetNeedAppearances(false);
         }
                 
-        ::PoDoFo::PdfPage*           page            = nullptr;
-        ::PoDoFo::PdfSignatureField* signature_field = nullptr;
+        ::PoDoFo::PdfPage* page = nullptr;
 
         // ... a signature with the same name present? ...
         if ( true == SignatureObjectExists(acro_form, name) ) {
@@ -194,7 +195,9 @@ void casper::pdf::podofo::Writer::Append (const pdf::SignatureAnnotation& a_anno
         } else {
             annotation->SetFlags(::PoDoFo::ePdfAnnotationFlags_Invisible |::PoDoFo::ePdfAnnotationFlags_Hidden | ::PoDoFo::ePdfAnnotationFlags_Locked);
         }
+        
         signature_field = new ::PoDoFo::PdfSignatureField(annotation, acro_form, &document);
+        
         casper::pdf::podofo::SignatureAnnotation sign_annotation(a_annotation);
         // ... prevent some apps from displaying annotation even it if it's not visible ...
         if ( true == a_annotation.visible() ) {
@@ -228,8 +231,18 @@ void casper::pdf::podofo::Writer::Append (const pdf::SignatureAnnotation& a_anno
 
         // ... write new contents ...
         sign_handler_->Flush();
-                
+        
+        delete signature_field;
+        
+    } catch (const ::cc::Exception& a_cc_exception) {
+        if ( nullptr != signature_field ) {
+            delete signature_field;
+        }
+        throw a_cc_exception;
     } catch (const ::PoDoFo::PdfError& a_error) {
+        if ( nullptr != signature_field ) {
+            delete signature_field;
+        }
         throw ::cc::Exception("PoDoFo Error: %4d - %s", a_error.GetError(), ::PoDoFo::PdfError::ErrorMessage(a_error.GetError()));
     }
 }

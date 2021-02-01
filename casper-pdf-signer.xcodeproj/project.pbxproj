@@ -15,6 +15,7 @@
 		472C19F1251A17F900811559 /* p7.cc in Sources */ = {isa = PBXBuildFile; fileRef = 472C19EF251A17F900811559 /* p7.cc */; };
 		472C19F8251A192800811559 /* certificate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 472C19F7251A192800811559 /* certificate.cc */; };
 		472C1A06251A1BA100811559 /* private_key.cc in Sources */ = {isa = PBXBuildFile; fileRef = 472C1A05251A1BA100811559 /* private_key.cc */; };
+		4763C23125B6E2C100864143 /* liblzma.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 47B4F1F2251CA207001ED028 /* liblzma.tbd */; };
 		4785D98C252E28F700D1F8D2 /* object.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4785D98A252E28F700D1F8D2 /* object.cc */; };
 		4785D994252E299700D1F8D2 /* object.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4785D98A252E28F700D1F8D2 /* object.cc */; };
 		47B4F1BC251C8ECC001ED028 /* annotation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 47B4F1BA251C8ECC001ED028 /* annotation.cc */; };
@@ -116,6 +117,7 @@
 		472C1A02251A1B2600811559 /* private_key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = private_key.h; sourceTree = "<group>"; };
 		472C1A05251A1BA100811559 /* private_key.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = private_key.cc; sourceTree = "<group>"; };
 		475F1C552562ED5D009BD0FF /* includes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = includes.h; sourceTree = "<group>"; };
+		4763C23925B6E36900864143 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4785D98A252E28F700D1F8D2 /* object.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = object.cc; sourceTree = "<group>"; };
 		4785D98B252E28F700D1F8D2 /* object.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
 		47B4F1BA251C8ECC001ED028 /* annotation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = annotation.cc; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4763C23125B6E2C100864143 /* liblzma.tbd in Frameworks */,
 				47B4F1DB251CA1C1001ED028 /* Foundation.framework in Frameworks */,
 				472C19CF251A166100811559 /* libcasper-cc.a in Frameworks */,
 				47B4F1DF251CA1D6001ED028 /* libiconv.tbd in Frameworks */,
@@ -280,6 +283,7 @@
 		472C19CE251A166100811559 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4763C23925B6E36900864143 /* Cocoa.framework */,
 				47B4F208251CA250001ED028 /* libbz2.tbd */,
 				47B4F1F8251CA21A001ED028 /* libz.tbd */,
 				47B4F1F2251CA207001ED028 /* liblzma.tbd */,
@@ -631,6 +635,8 @@
 					"$(SRCROOT)/../casper-packager/gettext/darwin/pkg/$(CONFIGURATION)/gettext/usr/local/casper/gettext/lib/libgnuintl.a",
 					"$(SRCROOT)/../casper-packager/libtiff/darwin/pkg/$(CONFIGURATION)/libtiff/usr/local/casper/libtiff/lib/libtiff.a",
 					"$(SRCROOT)/../casper-packager/qpdf/darwin/pkg/$(CONFIGURATION)/qpdf/usr/local/casper/qpdf/lib/libqpdf.a",
+					"$(SRCROOT)/../casper-packager/jbigkit/darwin/pkg/$(CONFIGURATION)/jbigkit/usr/local/casper/jbigkit/lib/libjbig.a",
+					"$(SRCROOT)/../casper-packager/opencv/darwin/pkg/$(CONFIGURATION)/opencv/usr/local/casper/opencv/lib/opencv4/3rdparty/liblibwebp.a",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
@@ -658,6 +664,8 @@
 					"$(SRCROOT)/../casper-packager/gettext/darwin/pkg/$(CONFIGURATION)/gettext/usr/local/casper/gettext/lib/libgnuintl.a",
 					"$(SRCROOT)/../casper-packager/libtiff/darwin/pkg/$(CONFIGURATION)/libtiff/usr/local/casper/libtiff/lib/libtiff.a",
 					"$(SRCROOT)/../casper-packager/qpdf/darwin/pkg/$(CONFIGURATION)/qpdf/usr/local/casper/qpdf/lib/libqpdf.a",
+					"$(SRCROOT)/../casper-packager/jbigkit/darwin/pkg/$(CONFIGURATION)/jbigkit/usr/local/casper/jbigkit/lib/libjbig.a",
+					"$(SRCROOT)/../casper-packager/opencv/darwin/pkg/$(CONFIGURATION)/opencv/usr/local/casper/opencv/lib/opencv4/3rdparty/liblibwebp.a",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";

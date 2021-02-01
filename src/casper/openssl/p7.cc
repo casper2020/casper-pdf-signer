@@ -534,14 +534,17 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
         }
         
         // ... decode and add signed digest bytes ...
-        DecodeBase64(a_enc_digest, &sh, (SHA256_DIGEST_LENGTH * 8));
+        const size_t mds = cppcodec::base64_rfc4648::decoded_max_size(a_enc_digest.length());
+                     sh  = new unsigned char[mds];
+        const auto   sz  = cppcodec::base64_rfc4648::decode(sh , mds, a_enc_digest.c_str(), a_enc_digest.length());
         ASN1_STRING_free(si->enc_digest);
         si->enc_digest = ASN1_OCTET_STRING_new();
         if ( nullptr == si->enc_digest ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_EXCEPTION(sk_p7_err_msg_unable_to_create_new_object_, "ASN1_OCTET_STRING", "nullptr");
         }
-        ASN1_OCTET_STRING_set(si->enc_digest, sh, (int)(SHA256_DIGEST_LENGTH * 8));
-        
+        ASN1_OCTET_STRING_set(si->enc_digest, sh, (int)sz);
+
+        // ... prepare for conversion ...
         bo = BIO_new(BIO_s_mem());
         if ( nullptr == bo ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_EXCEPTION(sk_p7_err_msg_unable_to_create_new_object_, "BIO", "nullptr");

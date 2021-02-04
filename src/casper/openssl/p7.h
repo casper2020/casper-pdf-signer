@@ -66,6 +66,7 @@ namespace casper
             static const char* const sk_p7_err_msg_unable_to_close_file_with_;
             static const char* const sk_p7_err_msg_unable_to_load_;
             static const char* const sk_p7_exp_msg_unable_to_load_;
+            static const char* const sk_p7_err_msg_signature_validation_failed_;
             
         public: // Static Method(s) / Function(s)
             
@@ -89,8 +90,7 @@ namespace casper
 
         private: // Static Method(s) / Function(s)
             
-            static void DecodeBase64 (const std::string& a_value,
-                                      unsigned char** o_buffer, const size_t a_expected_size);
+            static size_t DecodeBase64 (const std::string& a_value, unsigned char** o_buffer);
 
         }; // end of class 'P7'
         

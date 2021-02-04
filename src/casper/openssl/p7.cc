@@ -66,6 +66,7 @@ const char* const casper::openssl::P7::sk_p7_err_msg_unable_to_open_file_with_  
 const char* const casper::openssl::P7::sk_p7_err_msg_unable_to_close_file_with_   = "Unable to close file open '%s': %s !";
 const char* const casper::openssl::P7::sk_p7_err_msg_unable_to_load_              = "Unable load PKCS7";
 const char* const casper::openssl::P7::sk_p7_exp_msg_unable_to_load_              = "Unable load PKCS7 - %s!";
+const char* const casper::openssl::P7::sk_p7_err_msg_signature_validation_failed_ = "Signature validation failed!";
 
 // MARK: -
 
@@ -183,8 +184,8 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
         }
                 
         // ... decode and add digest bytes ...
-        DecodeBase64(a_digest, &dh, SHA256_DIGEST_LENGTH);
-        if ( 1 != PKCS7_add1_attrib_digest(si, (const unsigned char*) dh, SHA256_DIGEST_LENGTH) ) {
+        const size_t dsz = DecodeBase64(a_digest, &dh);
+        if ( 1 != PKCS7_add1_attrib_digest(si, (const unsigned char*) dh, static_cast<int>(dsz)) ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR(sk_p7_err_msg_unable_to_add_attribute_, "digest");
         }
         
@@ -368,8 +369,8 @@ void casper::openssl::P7::CalculateSigningAttributes (const std::string& a_diges
         st = nullptr; // ... it will be relased once si is released ...
 
         // ... decode and add document hash bytes ...
-        DecodeBase64(a_digest, &dh, SHA256_DIGEST_LENGTH);
-        if ( 1 != PKCS7_add1_attrib_digest(si, (const unsigned char*) dh, SHA256_DIGEST_LENGTH) ) {
+        const size_t dsz = DecodeBase64(a_digest, &dh);
+        if ( 1 != PKCS7_add1_attrib_digest(si, (const unsigned char*) dh, static_cast<int>(dsz)) ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR(sk_p7_err_msg_unable_to_add_attribute_, "digest");
         }
                 
@@ -528,21 +529,19 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
         }
         
         // ... decode and add digest bytes ...
-        DecodeBase64(a_digest, &dh, SHA256_DIGEST_LENGTH);
-        if ( 1 != PKCS7_add1_attrib_digest(si, (const unsigned char*) dh, SHA256_DIGEST_LENGTH) ) {
+        const size_t dsz = DecodeBase64(a_digest, &dh);
+        if ( 1 != PKCS7_add1_attrib_digest(si, (const unsigned char*) dh, static_cast<int>(dsz)) ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR(sk_p7_err_msg_unable_to_add_attribute_, "digest");
         }
         
         // ... decode and add signed digest bytes ...
-        const size_t mds = cppcodec::base64_rfc4648::decoded_max_size(a_enc_digest.length());
-                     sh  = new unsigned char[mds];
-        const auto   sz  = cppcodec::base64_rfc4648::decode(sh , mds, a_enc_digest.c_str(), a_enc_digest.length());
+        const size_t esz = DecodeBase64(a_enc_digest, &sh);
         ASN1_STRING_free(si->enc_digest);
         si->enc_digest = ASN1_OCTET_STRING_new();
         if ( nullptr == si->enc_digest ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_EXCEPTION(sk_p7_err_msg_unable_to_create_new_object_, "ASN1_OCTET_STRING", "nullptr");
         }
-        ASN1_OCTET_STRING_set(si->enc_digest, sh, (int)sz);
+        ASN1_OCTET_STRING_set(si->enc_digest, sh, static_cast<int>(esz));
 
         // ... prepare for conversion ...
         bo = BIO_new(BIO_s_mem());
@@ -556,9 +555,9 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
         }
         
         unsigned char* bytes = nullptr; // just a ptr to bytes inside bo
-        const size_t size_   = BIO_get_mem_data(bo, &bytes);
+        const size_t   size   = BIO_get_mem_data(bo, &bytes);
         
-        a_callback(bytes, size_);
+        a_callback(bytes, size);
 
     } catch (const cc::Exception& a_cc_exception) {
         ex = new cc::Exception(a_cc_exception);
@@ -674,19 +673,18 @@ void casper::openssl::P7::Export (const unsigned char* a_pkcs7, const size_t a_l
  *
  * @param a_value  BASE 64 encoded string.
  * @param o_buffer Output buffer - caller must delete [] it when it's no longer needed.
- * @param a_size   Expected size.
+ *
+ * @return Output buffer size.
  */
-void casper::openssl::P7::DecodeBase64 (const std::string& a_value,
-                                        unsigned char** o_buffer, const size_t a_size)
+size_t casper::openssl::P7::DecodeBase64 (const std::string& a_value, unsigned char** o_buffer)
 {
     // ... sanity check ...
     if ( nullptr == o_buffer || (*o_buffer) != nullptr ) {
         throw cc::Exception("%s", "Invalid 'o_buffer' param!");
     }
     // ...
+    size_t sz = 0;
     try {
-
-        size_t sz;
         try {
             const size_t mds = cppcodec::base64_rfc4648::decoded_max_size(a_value.length());
             (*o_buffer)  = new unsigned char[mds];
@@ -697,11 +695,6 @@ void casper::openssl::P7::DecodeBase64 (const std::string& a_value,
             (*o_buffer)  = new unsigned char[mds];
             sz = cppcodec::base64_url_unpadded::decode((*o_buffer) , mds, a_value.c_str(), a_value.length());
         }
-        
-        if ( a_size != sz ) {
-            throw cc::Exception("%s","Unexpected signed hash size!");
-        }
-
     } catch (...) {
         if ( nullptr != (*o_buffer)  ) {
             delete [] (*o_buffer) ;
@@ -709,4 +702,6 @@ void casper::openssl::P7::DecodeBase64 (const std::string& a_value,
         (*o_buffer)  = nullptr;
         cc::Exception::Rethrow(/* a_unhandled */ true, __FILE__, __LINE__, __FUNCTION__);
     }
+    // ... done ...
+    return sz;
 }

@@ -83,6 +83,10 @@ namespace casper
             public: // Static Method(s) / Function(s)
                 
                 static void Setup ();
+                
+            public: // Static Method(s) / Function(s)
+                
+                static void Demo (const std::string& a_uri);
 
             }; // end of class 'Annotation'
         

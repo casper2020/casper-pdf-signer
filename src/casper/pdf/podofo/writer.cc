@@ -29,6 +29,7 @@
 #include "cc/debug/types.h" //  CC_DEBUG_ON
 
 #include "casper/pdf/podofo/annotation.h"
+#include "version.h"
 
 // MARK: -
 
@@ -490,4 +491,52 @@ void casper::pdf::podofo::Writer::Setup ()
     ::PoDoFo::PdfError::EnableLogging(false);
 #endif
     ::PoDoFo::PdfError::EnableDebug(false);
+}
+
+/**
+ * @brief Create a demo PDF.
+ *
+ * @param a_uri Local file URI.
+ */
+void casper::pdf::podofo::Writer::Demo (const std::string& a_uri)
+{
+    ::PoDoFo::PdfStreamedDocument document(a_uri.c_str());
+    ::PoDoFo::PdfPainter painter;
+    ::PoDoFo::PdfPage* page_ptr;
+    ::PoDoFo::PdfFont* font_ptr;
+
+    try {
+
+        font_ptr = document.CreateFont("Helvetica");
+        if( nullptr == font_ptr ) {
+            PODOFO_RAISE_ERROR(::PoDoFo::ePdfError_InvalidFontFile);
+        }
+        font_ptr->SetFontSize(18.0);
+
+        page_ptr = document.CreatePage(::PoDoFo::PdfPage::CreateStandardPageSize(::PoDoFo::ePdfPageSize_A4));
+        if ( nullptr == page_ptr ) {
+            PODOFO_RAISE_ERROR(::PoDoFo::ePdfError_Unknown);
+        }
+        painter.SetPage(page_ptr);
+
+        painter.SetFont(font_ptr);
+        painter.DrawText( 56.69, page_ptr->GetPageSize().GetHeight() - 56.69, "Demo PDF");
+        painter.FinishPage();
+
+        document.GetInfo()->SetCreator (::PoDoFo::PdfString("Demo Creator"));
+        document.GetInfo()->SetAuthor  (::PoDoFo::PdfString("Demo Author"));
+        document.GetInfo()->SetTitle   (::PoDoFo::PdfString("Demo Tile"));
+        document.GetInfo()->SetSubject (::PoDoFo::PdfString("Demo Subject"));
+        document.GetInfo()->SetKeywords(::PoDoFo::PdfString("Demo;Keyword"));
+        document.GetInfo()->SetProducer(::PoDoFo::PdfString(CASPER_PDF_SIGNER_INFO));
+        document.Close();
+        
+    } catch (const ::PoDoFo::PdfError& a_podofo_exception ) {
+        try {
+            painter.FinishPage();
+        } catch( ... ) {
+            // ... ignore it ...
+        }
+        throw ::cc::Exception("%s", a_podofo_exception.what());
+    }
 }

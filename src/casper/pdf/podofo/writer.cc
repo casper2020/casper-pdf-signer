@@ -215,8 +215,8 @@ void casper::pdf::podofo::Writer::Append (const pdf::SignatureAnnotation& a_anno
         }
         
         signature_field->SetFieldName(name);
-        signature_field->SetSignatureReason(::PoDoFo::PdfString(a_annotation.info().reason_));
         signature_field->SetSignatureDate(::PoDoFo::PdfDate()); // TODO: date by param?
+        signature_field->SetSignatureReason(::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(a_annotation.info().reason_.c_str())));
         signature_field->SetSignature(*sign_handler_->GetSignatureBeacon());
         signature_field->SetSignatureCreator(::PoDoFo::PdfName(name_));
 

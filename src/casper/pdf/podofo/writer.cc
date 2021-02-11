@@ -25,6 +25,7 @@
 
 #include "cc/types.h" // SIZET_FMT
 #include "cc/fs/file.h"
+#include "cc/date_time.h"
 
 #include "cc/debug/types.h" //  CC_DEBUG_ON
 
@@ -215,8 +216,8 @@ void casper::pdf::podofo::Writer::Append (const pdf::SignatureAnnotation& a_anno
         }
         
         signature_field->SetFieldName(name);
-        signature_field->SetSignatureDate(::PoDoFo::PdfDate()); // TODO: date by param?
         signature_field->SetSignatureReason(::PoDoFo::PdfString(reinterpret_cast<const ::PoDoFo::pdf_utf8*>(a_annotation.info().reason_.c_str())));
+        signature_field->SetSignatureDate(::PoDoFo::PdfDate(cc::time::PARSE_YYMMDDHHMMSSZ(a_annotation.info().utc_date_time_.c_str())));
         signature_field->SetSignature(*sign_handler_->GetSignatureBeacon());
         signature_field->SetSignatureCreator(::PoDoFo::PdfName(name_));
 

@@ -44,6 +44,7 @@ namespace casper
             std::string reason_;
             std::string certified_by_;
             std::string date_time_;
+            std::string utc_date_time_;
             size_t      size_in_bytes_;
         } SignatureInfo;
 

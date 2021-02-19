@@ -53,6 +53,7 @@ namespace casper
             std::string signing_time_; //!< When signing was done.
             std::string auth_attr_;    //!< B64 encoded signing attributes.
             std::string enc_digest_;   //!< B64 encoded signed signing attributes ( auth_attr_ ).
+            std::string doc_name_;     //!< Document name ( optional ).
         } SigningInfo;
             
         typedef ::casper::openssl::Certificate Certificate;

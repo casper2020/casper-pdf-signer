@@ -3,20 +3,20 @@
  *
  * Copyright (c) 2011-2020 Cloudware S.A. All rights reserved.
  *
- * This file is part of casper-pdf-singer.
+ * This file is part of casper-pdf-signer.
  *
- * casper-pdf-singer is free software: you can redistribute it and/or modify
+ * casper-pdf-signer is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * casper-pdf-singer is distributed in the hope that it will be useful,
+ * casper-pdf-signer is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with casper-pdf-singer. If not, see <http://www.gnu.org/licenses/>.
+ * along with casper-pdf-signer. If not, see <http://www.gnu.org/licenses/>.
  */
 #pragma once
 #ifndef CASPER_PDF_SIGNER_VERSION_H_
@@ -27,7 +27,7 @@
 #endif
 
 #ifndef CASPER_PDF_SIGNER_NAME
-#define CASPER_PDF_SIGNER_NAME "casper-pdf-singer@b.n.s@"
+#define CASPER_PDF_SIGNER_NAME "casper-pdf-signer@b.n.s@"
 #endif
 
 #ifndef CASPER_PDF_SIGNER_VERSION

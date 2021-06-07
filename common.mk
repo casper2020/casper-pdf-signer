@@ -43,4 +43,4 @@ CC_SRC := \
 OBJECTS := \
   $(CC_SRC:.cc=.o)
 
-set-dependencies: casper-connectors-dep-on qpdf-dep-on podofo-dep-on cppcodec-dep-on
+set-dependencies: casper-connectors-dep-on qpdf-dep-on podofo-dep-on cppcodec-dep-on openssl-dep-on

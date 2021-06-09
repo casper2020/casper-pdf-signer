@@ -31,11 +31,19 @@
 #endif
 
 #ifndef CASPER_PDF_SIGNER_VERSION
-#define CASPER_PDF_SIGNER_VERSION "x.x.x"
+#define CASPER_PDF_SIGNER_VERSION "x.x.x"
 #endif
 
 #ifndef CASPER_PDF_SIGNER_REL_DATE
-#define CASPER_PDF_SIGNER_REL_DATE "d.d.d"
+#define CASPER_PDF_SIGNER_REL_DATE "r.r.d"
+#endif
+
+#ifndef CASPER_PDF_SIGNER_REL_BRANCH
+#define CASPER_PDF_SIGNER_REL_BRANCH "r.r.b"
+#endif
+
+#ifndef CASPER_PDF_SIGNER_REL_HASH
+#define CASPER_PDF_SIGNER_REL_HASH "r.r.h"
 #endif
 
 #ifndef CASPER_PDF_SIGNER_INFO

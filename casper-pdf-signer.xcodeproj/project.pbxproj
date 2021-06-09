@@ -345,6 +345,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 472C18A6251A0EAC00811559 /* Build configuration list for PBXNativeTarget "cps" */;
 			buildPhases = (
+				4717F1192670CA1400490B01 /* ShellScript */,
 				472C18A1251A0EAC00811559 /* Headers */,
 				472C18A2251A0EAC00811559 /* Sources */,
 				472C18A3251A0EAC00811559 /* Frameworks */,
@@ -429,6 +430,26 @@
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4717F1192670CA1400490B01 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "__current_version=`egrep -n  \"CASPER_PDF_SIGNER_VERSION\\ \\\".*\\\"$\" ${SRCROOT}/src/version.h  | cut -d'\"' -f2`\n__target_version=`cat ${SRCROOT}/../casper-packager/casper-pdf-signer/version`\nif [ \"${__current_version}\" != \"${__target_version}\" ] ; then\n    make -f Makefile TARGET=${CONFIGURATION} version\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		472C1892251A0E8200811559 /* Sources */ = {

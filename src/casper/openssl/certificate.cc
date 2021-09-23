@@ -43,11 +43,13 @@
 /**
  * @brief Default constructor.
  *
+ * @param a_type   One of \link Certificate::Type \link.
  * @param a_origin One of \link Certificate::Origin \link.
  * @param a_format One Of \link Certificate::Format \link.
  */
-casper::openssl::Certificate::Certificate (const casper::openssl::Certificate::Origin a_origin, const casper::openssl::Certificate::Format a_format)
-    : origin_(a_origin), format_(a_format)
+casper::openssl::Certificate::Certificate (const casper::openssl::Certificate::Type a_type,
+                                           const casper::openssl::Certificate::Origin a_origin, const casper::openssl::Certificate::Format a_format)
+    : type_(a_type), origin_(a_origin), format_(a_format)
 {
     /* empty */
 }
@@ -55,13 +57,15 @@ casper::openssl::Certificate::Certificate (const casper::openssl::Certificate::O
 /**
  * @brief Constructor.
  *
+ * @param a_type   One of \link Certificate::Type \link.
  * @param a_origin One of \link Certificate::Origin \link.
  * @param a_format One Of \link Certificate::Format \link.
  * @param a_data   Certificate data, related to \link Certificate::Origin \link.
  */
-casper::openssl::Certificate::Certificate (const casper::openssl::Certificate::Origin a_origin, const casper::openssl::Certificate::Format a_format,
+casper::openssl::Certificate::Certificate (const casper::openssl::Certificate::Type a_type,
+                                           const casper::openssl::Certificate::Origin a_origin, const casper::openssl::Certificate::Format a_format,
                                    const std::string& a_data)
-    : origin_(a_origin), format_(a_format), data_(a_data)
+    : type_(a_type), origin_(a_origin), format_(a_format), data_(a_data)
 {
     /* empty */
 }
@@ -72,7 +76,7 @@ casper::openssl::Certificate::Certificate (const casper::openssl::Certificate::O
  * @param a_certificate Object to copy from.
  */
 casper::openssl::Certificate::Certificate (const casper::openssl::Certificate& a_certificate)
-    : origin_(a_certificate.origin_), format_(a_certificate.format_), data_(a_certificate.data_)
+    : type_(a_certificate.type_), origin_(a_certificate.origin_), format_(a_certificate.format_), data_(a_certificate.data_)
 {
     /* empty */
 }

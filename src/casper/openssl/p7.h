@@ -91,6 +91,10 @@ namespace casper
         private: // Static Method(s) / Function(s)
             
             static size_t DecodeBase64 (const std::string& a_value, unsigned char** o_buffer);
+            
+        private: // Static Method(s) / Function(s)
+            
+            static void AddSigningCertificate (PKCS7_SIGNER_INFO* a_info, X509* a_x509);
 
         }; // end of class 'P7'
         

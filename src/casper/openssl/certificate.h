@@ -22,6 +22,8 @@
 #define CASPER_OPENSSL_CERTIFICATE_H_
 
 #include "cc/non-movable.h"
+#include "cc/exception.h"
+#include "cc/types.h"
 
 #include <inttypes.h> // uint8_t
 #include <vector>
@@ -39,6 +41,13 @@ namespace casper
         {
             
         public: // Data Type(s)
+            
+            enum Type : uint8_t {
+                NotSet = 0,
+                Issuer,
+                Intermediate,
+                Entity
+            };
 
             enum Origin : uint8_t {
                 File,   //!< BASE64 encoded file.
@@ -53,6 +62,7 @@ namespace casper
             
         private: // Const Data
             
+            const Type   type_;   //!< One of \link Type \link.
             const Origin origin_; //!< One of \link Origin \link.
             const Format format_; //!< One of \link Format \link.
             
@@ -63,8 +73,8 @@ namespace casper
         public: // Constructor(s) / Destructor
             
             Certificate () = delete;
-            Certificate (const Origin a_origin, const Format a_format);
-            Certificate (const Origin a_origin, const Format a_format, const std::string& a_data);
+            Certificate (const Type a_type, const Origin a_origin, const Format a_format);
+            Certificate (const Type a_type, const Origin a_origin, const Format a_format, const std::string& a_data);
             Certificate (const Certificate& a_certificate);
 
             virtual ~Certificate ();
@@ -83,8 +93,16 @@ namespace casper
             
         public: // Inline Method(s) / Function(s)
             
-            void               Set  (const std::string& a_data);
-            const std::string& data () const;
+            void               Set    (const std::string& a_data);
+            const std::string& data   () const;
+            const Type&        type   () const;
+            const Origin&      origin () const;
+            const Format&      format () const;
+            
+        public: // Static Method(s) / Function(s)
+            
+            static const char* const Type2CString   (const Type& a_type);
+            static const char* const Format2CString (const Format& a_format);
             
         }; // end of class 'Certificate'
     
@@ -104,6 +122,68 @@ namespace casper
             return data_;
         }
     
+        /**
+         * @brief R/O access to type.
+         */
+        inline const Certificate::Type& Certificate::type () const
+        {
+            return type_;
+        }
+        
+        /**
+         * @brief R/O access to origin.
+         */
+        inline const Certificate::Origin& Certificate::origin () const
+        {
+            return origin_;
+        }
+        
+        /**
+         * @brief R/O access to format.
+         */
+        inline const Certificate::Format& Certificate::format () const
+        {
+            return format_;
+        }
+        
+        /**
+         * @brief Translate a \link Certificate::Type \link to a C string.
+         *
+         * @param a_type One of \link Certificate::Type \link.
+         *
+         * @return Certificate type as C string.
+         */
+        inline const char* const Certificate::Type2CString (const Certificate::Type& a_type)
+        {
+            switch(a_type) {
+                case Certificate::Type::Issuer:
+                    return "Issuer";
+                case Certificate::Type::Intermediate:
+                    return "Intermediate";
+                case Certificate::Type::Entity:
+                    return "Entity";
+                default:
+                    throw ::cc::Exception("Don't know how to translate certificate type " UINT8_FMT " to string!", static_cast<uint8_t>(a_type));
+            }
+        }
+                
+        /**
+         * @brief Translate a \link Certificate::Format \link to a C string.
+         *
+         * @param a_format One of \link Certificate::Format \link.
+         *
+         * @return Certificate type as C string.
+         */
+        inline const char* const Certificate::Format2CString (const Certificate::Format& a_format)
+        {
+            switch(a_format) {
+                case Certificate::Format::DER:
+                    return "DER";
+                default:
+                    throw ::cc::Exception("Don't know how to translate certificate format " UINT8_FMT " to string!", static_cast<uint8_t>(a_format));
+            }
+        }
+        
     } // end of namespace 'openssl'
     
 } // end of namespace 'casper'

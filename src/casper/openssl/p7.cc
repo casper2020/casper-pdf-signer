@@ -34,6 +34,8 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 
+#include "casper/openssl/ts_rsp_sign.h"
+
 #define CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR(a_format, ...) \
 { \
     char __tmp_error__[130] = {0}; \
@@ -188,6 +190,9 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
         if ( 1 != PKCS7_add1_attrib_digest(si, (const unsigned char*) dh, static_cast<int>(dsz)) ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR(sk_p7_err_msg_unable_to_add_attribute_, "digest");
         }
+        
+        // ... add signing certificate ....
+        AddSigningCertificate(si, x509);
         
         // ... add certificate ..
         if ( 1 != PKCS7_add_certificate(p7, x509) ) {
@@ -373,7 +378,12 @@ void casper::openssl::P7::CalculateSigningAttributes (const std::string& a_diges
         if ( 1 != PKCS7_add1_attrib_digest(si, (const unsigned char*) dh, static_cast<int>(dsz)) ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR(sk_p7_err_msg_unable_to_add_attribute_, "digest");
         }
-                
+        
+        // ... add signing certificate ....
+        if ( nullptr != x509 ) {
+            AddSigningCertificate(si, x509);
+        }
+        
         // ... get auth_attr value ...
         const int auth_attr_len = ASN1_item_i2d((ASN1_VALUE *)si->auth_attr, &ab, ASN1_ITEM_rptr(PKCS7_ATTR_SIGN));
         // ... convert it to base 64 ...
@@ -533,6 +543,9 @@ void casper::openssl::P7::Sign (const Certificate& a_certificate, const Certific
         if ( 1 != PKCS7_add1_attrib_digest(si, (const unsigned char*) dh, static_cast<int>(dsz)) ) {
             CASPER_OPENSSL_P7_THROW_OPENSSL_ERROR(sk_p7_err_msg_unable_to_add_attribute_, "digest");
         }
+        
+        // ... add signing certificate ....
+        AddSigningCertificate(si, x509);
         
         // ... decode and add signed digest bytes ...
         const size_t esz = DecodeBase64(a_enc_digest, &sh);
@@ -704,4 +717,26 @@ size_t casper::openssl::P7::DecodeBase64 (const std::string& a_value, unsigned c
     }
     // ... done ...
     return sz;
+}
+
+// MARK: -
+
+/**
+ * @brief Add signing certificate.
+ *
+ * @param a_info        See \link PKCS7_SIGNER_INFO \link.
+ * @param a_certificate See \link X509 \link.
+ */
+void casper::openssl::P7::AddSigningCertificate (PKCS7_SIGNER_INFO* a_info, X509* a_certificate)
+{
+    ESS_SIGNING_CERT_V2* sc = casper_ess_signing_cert_v2_new_init(EVP_sha256(), a_certificate, NULL);
+    if ( nullptr == sc ) {
+        CASPER_OPENSSL_P7_THROW_OPENSSL_EXCEPTION(sk_p7_err_msg_unable_to_set_si_field_, "signing-certificate");
+    }
+
+    const int ret = casper_ess_add_signing_cert_v2(a_info, sc);
+    if ( 0 != ret ) {
+        ESS_SIGNING_CERT_V2_free(sc);
+        CASPER_OPENSSL_P7_THROW_OPENSSL_EXCEPTION(sk_p7_err_msg_unable_to_set_si_field_, "signing-certificate");
+    }
 }

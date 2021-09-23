@@ -734,8 +734,7 @@ void casper::openssl::P7::AddSigningCertificate (PKCS7_SIGNER_INFO* a_info, X509
         CASPER_OPENSSL_P7_THROW_OPENSSL_EXCEPTION(sk_p7_err_msg_unable_to_set_si_field_, "signing-certificate");
     }
 
-    const int ret = casper_ess_add_signing_cert_v2(a_info, sc);
-    if ( 0 != ret ) {
+    if ( 1 != casper_ess_add_signing_cert_v2(a_info, sc) ) {
         ESS_SIGNING_CERT_V2_free(sc);
         CASPER_OPENSSL_P7_THROW_OPENSSL_EXCEPTION(sk_p7_err_msg_unable_to_set_si_field_, "signing-certificate");
     }

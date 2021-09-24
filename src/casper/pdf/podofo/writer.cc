@@ -505,23 +505,32 @@ void casper::pdf::podofo::Writer::Demo (const std::string& a_uri)
     ::PoDoFo::PdfPainter painter;
     ::PoDoFo::PdfPage* page_ptr;
     ::PoDoFo::PdfFont* font_ptr;
-
     try {
 
         font_ptr = document.CreateFont("Helvetica");
         if( nullptr == font_ptr ) {
             PODOFO_RAISE_ERROR(::PoDoFo::ePdfError_InvalidFontFile);
         }
-        font_ptr->SetFontSize(18.0);
+        font_ptr->SetFontSize(14.0);
 
         page_ptr = document.CreatePage(::PoDoFo::PdfPage::CreateStandardPageSize(::PoDoFo::ePdfPageSize_A4));
         if ( nullptr == page_ptr ) {
             PODOFO_RAISE_ERROR(::PoDoFo::ePdfError_Unknown);
         }
         painter.SetPage(page_ptr);
+        
+        const std::string title        = "Demo PDF";
+        const double      title_x      = page_ptr->GetPageSize().GetHeight() - 56.69;
+        const std::string footer       = "@ " + ::cc::UTCTime::NowISO8601DateTime();
+        const double      footer_x     = page_ptr->GetPageSize().GetWidth() - font_ptr->GetFontMetrics()->StringWidth(footer) - 28.35;
+        const std::string created_by   = "Created by " CASPER_PDF_SIGNER_INFO;
+        const double      created_by_y = page_ptr->GetPageSize().GetHeight() - 300;
+        const double      created_by_x = ( page_ptr->GetPageSize().GetWidth() / 2.0 )  - ( font_ptr->GetFontMetrics()->StringWidth(created_by) / 2.0 );
 
         painter.SetFont(font_ptr);
-        painter.DrawText( 56.69, page_ptr->GetPageSize().GetHeight() - 56.69, "Demo PDF");
+        painter.DrawText(28.35        , title_x    , title);
+        painter.DrawText(created_by_x, created_by_y, created_by);
+        painter.DrawText(footer_x     , 28.35, footer);
         painter.FinishPage();
 
         document.GetInfo()->SetCreator (::PoDoFo::PdfString("Demo Creator"));

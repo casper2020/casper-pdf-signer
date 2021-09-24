@@ -16,15 +16,19 @@ REL_NAME             ?= casper-pdf-signer$(EXECUTABLE_SUFFIX)
 REL_DATE             := $(shell date -u)
 REL_HASH             := $(shell git rev-parse HEAD)
 REL_BRANCH           := $(shell git rev-parse --abbrev-ref HEAD)
+REL_BINARY_ABBR     := cps
+REL_BINARY_NAME     := $(REL_NAME)
 
 PROJECT_SRC_DIR     := $(ROOT_DIR)/casper-pdf-signer
 EXECUTABLE_SUFFIX   ?=
 EXECUTABLE_NAME     ?= casper-pdf-signer$(EXECUTABLE_SUFFIX)
 EXECUTABLE_MAIN_SRC := src/main.cc
 LIBRARY_NAME        :=
-VERSION             := $(shell cat $(PACKAGER_DIR)/casper-pdf-signer/version)
 CHILD_CWD           := $(THIS_DIR)
 CHILD_MAKEFILE      := $(MAKEFILE_LIST)
+
+VERSION_FILE 	    ?= $(PROJECT_SRC_DIR)/src/version.h
+VERSION             ?= $(shell cat $(PACKAGER_DIR)/casper-pdf-signer$(EXECUTABLE_SUFFIX)/version)
 
 ###################
 # THIS TOOL SOURCE
@@ -74,13 +78,16 @@ all: exec
 
 # version
 version:
-	@echo " $(LOG_COMPILING_PREFIX) - patching $(PROJECT_SRC_DIR)/src/version.h"
-	@cp -f $(PROJECT_SRC_DIR)/src/version.tpl.h $(PROJECT_SRC_DIR)/src/version.h
-	@sed -i.bak s#"@b.n.s@"#${EXECUTABLE_SUFFIX}#g $(PROJECT_SRC_DIR)/src/version.h
-	@sed -i.bak s#"x.x.x"#$(VERSION)#g $(PROJECT_SRC_DIR)/src/version.h
-	@sed -i.bak s#"n.n.n"#$(REL_NAME)#g $(PROJECT_SRC_DIR)/src/version.h
-	@sed -i.bak s#"r.r.d"#"$(REL_DATE)"#g $(PROJECT_SRC_DIR)/src/version.h
-	@sed -i.bak s#"r.r.b"#"$(REL_BRANCH)"#g $(PROJECT_SRC_DIR)/src/version.h
-	@sed -i.bak s#"r.r.h"#"$(REL_HASH)"#g $(PROJECT_SRC_DIR)/src/version.h
-	@sed -i.bak s#"v.v.v"#"$(REL_VARIANT)"#g $(PROJECT_SRC_DIR)/src/version.h
-	@rm -f $(PROJECT_SRC_DIR)/src/version.h.bak
+	@echo " $(LOG_COMPILING_PREFIX) - patching $(VERSION_FILE)"
+	@cp -f $(PROJECT_SRC_DIR)/src/version.tpl.h $(VERSION_FILE)
+	@sed -i.bak s#"@b.n.s@"#${EXECUTABLE_SUFFIX}#g $(VERSION_FILE)
+	@sed -i.bak s#"x.x.x"#$(VERSION)#g $(VERSION_FILE)
+	@sed -i.bak s#"n.n.n"#$(REL_NAME)#g $(VERSION_FILE)
+	@sed -i.bak s#"v.v.v"#"$(REL_VARIANT)"#g $(VERSION_FILE)
+	@sed -i.bak s#"a.b.b"#"$(REL_BINARY_ABBR)"#g $(VERSION_FILE)
+	@sed -i.bak s#"c.t.n"#$(REL_BINARY_NAME)#g $(VERSION_FILE)
+	@sed -i.bak s#"r.r.d"#"$(REL_DATE)"#g $(VERSION_FILE)
+	@sed -i.bak s#"r.r.b"#"$(REL_BRANCH)"#g $(VERSION_FILE)
+	@sed -i.bak s#"r.r.h"#"$(REL_HASH)"#g $(VERSION_FILE)
+	@sed -i.bak s#"t.t.t"#$(TARGET)#g $(VERSION_FILE)
+	@rm -f $(VERSION_FILE).bak

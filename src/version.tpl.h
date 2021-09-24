@@ -23,11 +23,11 @@
 #define CASPER_PDF_SIGNER_VERSION_H_
 
 #ifndef CASPER_PDF_SIGNER_ABBR
-#define CASPER_PDF_SIGNER_ABBR "cps"
+#define CASPER_PDF_SIGNER_ABBR "a.b.b"
 #endif
 
 #ifndef CASPER_PDF_SIGNER_NAME
-#define CASPER_PDF_SIGNER_NAME "casper-pdf-signer@b.n.s@"
+#define CASPER_PDF_SIGNER_NAME "c.t.n@b.n.s@"
 #endif
 
 #ifndef CASPER_PDF_SIGNER_VERSION

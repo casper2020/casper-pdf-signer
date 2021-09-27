@@ -32,13 +32,18 @@ CASPER_PDF_SIGNER_CC_SRC := \
 	$(PROJECT_SRC_DIR)/src/casper/pdf/podofo/annotation.cc \
 	$(PROJECT_SRC_DIR)/src/casper/openssl/certificate.cc   \
 	$(PROJECT_SRC_DIR)/src/casper/openssl/p7.cc            \
-	$(PROJECT_SRC_DIR)/src/casper/openssl/private_key.cc
+	$(PROJECT_SRC_DIR)/src/casper/openssl/private_key.cc   \
+	$(PROJECT_SRC_DIR)/src/casper/openssl/ts_rsp_sign.cc
 
 INCLUDE_DIRS := \
     -I $(PROJECT_SRC_DIR)/src
 
 CC_SRC := \
     $(CASPER_PDF_SIGNER_CC_SRC)
+
+INCLUDE_DIRS += \
+	-I $(PACKAGER_DIR)/../openssl \
+	-I $(PACKAGER_DIR)/../openssl/include
 
 OBJECTS := \
   $(CC_SRC:.cc=.o)

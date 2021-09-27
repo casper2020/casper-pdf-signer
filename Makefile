@@ -58,7 +58,7 @@ include $(PACKAGER_DIR)/common/c++/common.mk
 # dependencies
 CASPER_PDF_SIGNER_DEPENDENCIES := \
 	casper-connectors-icu-on \
-	casper-osal-dep-on \
+	casper-osal-icu-dep-on \
 	postgresql-dep-on \
 	curl-dep-on \
 	openssl-dep-on \

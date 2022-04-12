@@ -21,9 +21,6 @@
 
 #include "casper/pdf/qpdf/reader.h"
 
-#include <qpdf/QPDFPageDocumentHelper.hh>
-#include <qpdf/QPDFAcroFormDocumentHelper.hh>
-
 #include "cc/exception.h"
 #include "cc/types.h"
 

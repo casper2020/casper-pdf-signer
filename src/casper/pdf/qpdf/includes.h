@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with casper. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef CASPER_PDF_PODOFO_INCLUDES_H_
-#define CASPER_PDF_PODOFO_INCLUDES_H_
+#ifndef CASPER_PDF_QPDF_INCLUDES_H_
+#define CASPER_PDF_QPDF_INCLUDES_H_
 
 #pragma GCC diagnostic push
 #ifdef __APPLE__
@@ -29,7 +29,10 @@
  #pragma GCC diagnostic ignored "-Wc++98-compat-extra-semi"
  #pragma GCC diagnostic ignored "-Wextra-semi"
 #endif
-#include <podofo/podofo.h>
+#include <qpdf/QPDF.hh>
+#include <qpdf/QPDFPageDocumentHelper.hh>
+#include <qpdf/QPDFFormFieldObjectHelper.hh>
+#include <qpdf/QPDFAcroFormDocumentHelper.hh>
 #pragma GCC diagnostic pop
 
-#endif // CASPER_PDF_PODOFO_INCLUDES_H_
+#endif // CASPER_PDF_QPDF_INCLUDES_H_

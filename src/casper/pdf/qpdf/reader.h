@@ -28,9 +28,7 @@
 #include <inttypes.h>
 #include <string>
 
-#include <qpdf/QPDF.hh>
-#include <qpdf/QPDFPageDocumentHelper.hh>
-#include <qpdf/QPDFFormFieldObjectHelper.hh>
+#include "casper/pdf/qpdf/includes.h"
 
 namespace casper
 {

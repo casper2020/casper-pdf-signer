@@ -28,6 +28,7 @@
  #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
  #pragma GCC diagnostic ignored "-Wc++98-compat-extra-semi"
  #pragma GCC diagnostic ignored "-Wextra-semi"
+ #pragma GCC diagnostic ignored "-Wshadow-all"
 #endif
 #include <qpdf/QPDF.hh>
 #include <qpdf/QPDFPageDocumentHelper.hh>

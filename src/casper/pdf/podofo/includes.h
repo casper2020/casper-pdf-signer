@@ -21,15 +21,14 @@
 #ifndef CASPER_PDF_PODOFO_INCLUDES_H_
 #define CASPER_PDF_PODOFO_INCLUDES_H_
 
-#pragma GCC diagnostic push
-#ifdef __APPLE__
- #pragma GCC diagnostic ignored "-Wmissing-exception-spec"
- #pragma GCC diagnostic ignored "-Wdocumentation"
- #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
- #pragma GCC diagnostic ignored "-Wc++98-compat-extra-semi"
- #pragma GCC diagnostic ignored "-Wextra-semi"
-#endif
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-exception-spec"
+#pragma clang diagnostic ignored "-Wdocumentation"
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wc++98-compat-extra-semi"
+#pragma clang diagnostic ignored "-Wextra-semi"
+#pragma clang diagnostic ignored "-Wsign-conversion"
 #include <podofo/podofo.h>
-#pragma GCC diagnostic pop
+#pragma clang diagnostic pop
 
 #endif // CASPER_PDF_PODOFO_INCLUDES_H_

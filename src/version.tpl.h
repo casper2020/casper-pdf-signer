@@ -27,7 +27,7 @@
 #endif
 
 #ifndef CASPER_PDF_SIGNER_NAME
-#define CASPER_PDF_SIGNER_NAME "c.t.n@b.n.s@"
+#define CASPER_PDF_SIGNER_NAME "n.n.n"
 #endif
 
 #ifndef CASPER_PDF_SIGNER_VERSION
@@ -44,6 +44,10 @@
 
 #ifndef CASPER_PDF_SIGNER_REL_HASH
 #define CASPER_PDF_SIGNER_REL_HASH "r.r.h"
+#endif
+
+#ifndef CASPER_PDF_SIGNER_REL_TARGET
+#define CASPER_PDF_SIGNER_REL_TARGET "r.r.t"
 #endif
 
 #ifndef CASPER_PDF_SIGNER_INFO

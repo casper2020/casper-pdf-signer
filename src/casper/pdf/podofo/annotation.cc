@@ -57,7 +57,7 @@ casper::pdf::podofo::SignatureAnnotation::~SignatureAnnotation ()
  * @param a_document   Document where annotation is placed at.
  * @param a_field      Signature field.
  */
-void casper::pdf::podofo::SignatureAnnotation::Draw (const ::PoDoFo::PdfAnnotation& a_annotation, const ::PoDoFo::PdfRect& a_rect,
+void casper::pdf::podofo::SignatureAnnotation::Draw (const ::PoDoFo::PdfAnnotation& /* a_annotation */, const ::PoDoFo::PdfRect& a_rect,
                                                      ::PoDoFo::PdfDocument& a_document, ::PoDoFo::PdfSignatureField& a_field) const
 {
     ::PoDoFo::PdfPainter painter;

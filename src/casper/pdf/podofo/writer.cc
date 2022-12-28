@@ -92,7 +92,7 @@ void casper::pdf::podofo::Writer::Open (const std::string& a_io)
  * @param a_out       Local file URI to write to.
  * @param a_overwrite When true, overwrite destination file ( if any ).
  */
-void casper::pdf::podofo::Writer::Open (const std::string& a_in, const std::string& a_out, const bool a_overwrite)
+void casper::pdf::podofo::Writer::Open (const std::string& a_in, const std::string& a_out, const bool /* a_overwrite */)
 {
     // ... already open?
     if ( nullptr != document_handler_ || nullptr != output_handler_ || nullptr != sign_handler_ ) {
